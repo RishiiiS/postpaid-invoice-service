@@ -33,9 +33,9 @@ public class BillingCycleServiceImpl implements BillingCycleService {
 
     @Override
     public BillingCycleResponseDto createCycle(BillingCycleRequestDto requestDto) {
-        // if (billingCycleRepository.existsById(requestDto.getCycleCode())) {
-        //     throw new RuntimeException("Billing cycle already exists with code: " + requestDto.getCycleCode());
-        // }
+        if (billingCycleRepository.existsById(requestDto.getCycleCode())) {
+            throw new RuntimeException("Billing cycle already exists with code: " + requestDto.getCycleCode());
+        }
 
         BillingCycle entity = mapToEntity(requestDto);
         entity.setRemark(generateRemark(entity.getCycleCode()));
@@ -87,7 +87,7 @@ public class BillingCycleServiceImpl implements BillingCycleService {
             return "th";
         }
         switch (day % 10) {
-            case 1:  return "st";
+            case 1:  return "st";  
             case 2:  return "nd";
             case 3:  return "rd";
             default: return "th";
